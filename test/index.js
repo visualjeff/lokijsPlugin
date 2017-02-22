@@ -41,4 +41,22 @@ describe('lokijsPlugin', () => {
         });
     });
 
+    it('db is inject into request', (done) => {
+
+        const server = new Hapi.Server();
+        server.connection();
+        server.register([LokijsPlugin], (err) => {
+
+            expect(err).to.not.exist();
+        });
+        server.route([{
+            method: 'GET',
+            path: '/',
+            handler: (request, reply) => {
+
+                expect(request.app.db).to.exist();
+            }
+        }]);
+        done();
+    });
 });

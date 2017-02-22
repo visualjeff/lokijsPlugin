@@ -3,6 +3,8 @@
 
 A hapi plugin to facilitate the initialization of lokijs within your application.
 
+[![Build Status](https://travis-ci.org/visualjeff/lokijsPlugin.png)](https://travis-ci.org/visualjeff/lokijsPlugin)
+
 See the example for details on accessing the database within routes.
 
 ## Usage
