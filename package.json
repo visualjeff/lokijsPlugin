@@ -1,7 +1,7 @@
 {
   "name": "lokijs-plugin",
   "description": "A lokijs database plugin",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "repository": "git://github.com/visualjeff/lokijsPlugin.git",
   "bugs": {
     "url": "https://github.com/hapijs/crumb/issues"
