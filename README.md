@@ -1,5 +1,5 @@
 
-## About lokijsPlugin
+## About lokijs-plugin
 
 A hapi plugin to facilitate the initialization of lokijs within your application.
 
@@ -21,7 +21,7 @@ server.connection({
 });
 
 server.register([{
-    register: require('lokijsPlugin'),
+    register: require('lokijs-plugin'),
     options: {
         env: 'NODEJS' 
     }

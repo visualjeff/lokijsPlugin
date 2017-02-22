@@ -12,7 +12,7 @@ const expect = Code.expect;
 const it = lab.test;
 
 
-describe('lokijsPlugin', () => {
+describe('lokijs-plugin', () => {
 
     it('loads as a plugin', (done) => {
 
