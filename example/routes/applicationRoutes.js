@@ -2,6 +2,7 @@
 
 const routes = {
     register: (server, options, next) => {
+
         server.route({
             method: 'GET',
             path: '/',
@@ -9,13 +10,16 @@ const routes = {
                 auth: false, //Public access allowed
                 description: 'Route is website root'
             },
-            handler: function(request, reply) {
-                let contacts = request.app.db.getCollection('contacts');
-                let results = contacts.where(function(obj) {
+            handler: function (request, reply) {
+
+                const contacts = request.app.db.getCollection('contacts');
+                const results = contacts.where((obj) => {
+
                     return obj.firstLanguage === 'english';
                 });
-                let response = `The following speak english as a first Language: <br><ul>`;
-                results.forEach(record => {
+                let response = 'The following speak english as a first Language: <br><ul>';
+                results.forEach((record) => {
+
                     response = response + '<li>' + record.name + '<br>';
                 });
                 response = response + '</ul>';

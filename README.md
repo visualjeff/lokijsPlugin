@@ -24,19 +24,19 @@ server.register([{
         env: 'NODEJS' 
     }
 }, {
-    register: require('./routes/applicationRoutes') //Load your routes, blah, blah...
+    register: require('./routes/applicationRoutes') //Load routes
 }], (err) => {
     if (err) {
         throw err;
     }
 });
 
-server.start(function(err) {
+server.start((err) => {
     if (err) {
         throw err;
     }
 
-    console.dir('Server running at: ' + server.info.uri, {
+    console.dir(`Server running at:  ${server.info.uri}`, {
         colors: true
     });
 });
