@@ -19,7 +19,7 @@ server.connection({
 });
 
 server.register([{
-    register: require('./lokijsPlugin'),
+    register: require('lokijsPlugin'),
     options: {
         env: 'NODEJS' 
     }
