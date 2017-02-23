@@ -41,7 +41,7 @@ describe('lokijs-plugin', () => {
         });
     });
 
-    it('db is inject into request', (done) => {
+    it('db is injected into request', (done) => {
 
         const server = new Hapi.Server();
         server.connection();
@@ -59,4 +59,57 @@ describe('lokijs-plugin', () => {
         }]);
         done();
     });
+
+    it('db is injected into server.app', (done) => {
+
+        const server = new Hapi.Server();
+        server.connection();
+        server.register([LokijsPlugin], (err) => {
+
+            expect(err).to.not.exist();
+        });
+        expect(server.app.db).to.exist();
+        done();
+    });
+});
+
+
+it('a route works with data and fetches sample data', (done) => {
+
+    const server = new Hapi.Server();
+    server.connection();
+    server.register([LokijsPlugin], (err) => {
+
+        expect(err).to.not.exist();
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/',
+        config: {
+            auth: false
+        },
+        handler: (request, reply) => {
+
+            const contacts = request.app.db.addCollection('contacts');
+            contacts.insert({
+                name: 'dave',
+                firstLanguage: 'english'
+            });
+            const record = contacts.get(1);
+            reply(record.firstLanguage);
+        }
+    });
+
+    const options = {
+        method: 'GET',
+        url: '/'
+    };
+    server.inject(options, (response) => {
+
+        expect(response.statusCode).to.equal(200);
+        expect(response.result).to.equal('english');
+        done();
+    });
+
 });
