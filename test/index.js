@@ -14,102 +14,125 @@ const it = lab.test;
 
 describe('lokijs-plugin', () => {
 
-    it('loads as a plugin', (done) => {
+    it('loads as a plugin', () => {
 
         const server = new Hapi.Server();
-        server.connection();
-        server.register([LokijsPlugin], (err) => {
+        const register = async () => {
+
+            await server.register([{
+                plugin: LokijsPlugin
+            }]);
+        };
+
+        register().catch((err) => {
 
             expect(err).to.not.exist();
-            done();
         });
     });
 
-    it('errors with invalid options', (done) => {
+    it('errors with invalid options', () => {
 
         const server = new Hapi.Server();
-        server.connection();
-        server.register([{
-            register: LokijsPlugin,
-            options: {
-                verbose: 'invalid value'
-            }
-        }], (err) => {
+        const register = async () => {
+
+            await server.register([{
+                plugin: LokijsPlugin,
+                options: {
+                    verbose: 'invalid value'
+                }
+            }]);
+        };
+
+        register().catch((err) => {
 
             expect(err).to.exist();
-            done();
         });
     });
 
-    it('db is injected into request', (done) => {
+    it('db is injected into request', () => {
 
         const server = new Hapi.Server();
-        server.connection();
-        server.register([LokijsPlugin], (err) => {
+        const register = async () => {
+
+            await server.register([{
+                plugin: LokijsPlugin
+            }]);
+        };
+
+        register().catch((err) => {
 
             expect(err).to.not.exist();
         });
+
         server.route([{
             method: 'GET',
             path: '/',
-            handler: (request, reply) => {
+            handler: (request, h) => {
 
                 expect(request.app.db).to.exist();
             }
         }]);
-        done();
     });
 
-    it('db is injected into server.app', (done) => {
+    it('db is injected into server.app', () => {
 
         const server = new Hapi.Server();
-        server.connection();
-        server.register([LokijsPlugin], (err) => {
+        const register = async () => {
+
+            await server.register([{
+                plugin: LokijsPlugin
+            }]);
+        };
+
+        register().catch((err) => {
 
             expect(err).to.not.exist();
         });
         expect(server.app.db).to.exist();
-        done();
-    });
-});
-
-
-it('a route works with data and fetches sample data', (done) => {
-
-    const server = new Hapi.Server();
-    server.connection();
-    server.register([LokijsPlugin], (err) => {
-
-        expect(err).to.not.exist();
     });
 
-    server.route({
-        method: 'GET',
-        path: '/',
-        config: {
-            auth: false
-        },
-        handler: (request, reply) => {
 
-            const contacts = request.app.db.addCollection('contacts');
-            contacts.insert({
-                name: 'dave',
-                firstLanguage: 'english'
-            });
-            const record = contacts.get(1);
-            reply(record.firstLanguage);
-        }
+    it('a route works with data and fetches sample data', () => {
+
+        const server = new Hapi.Server();
+        const register = async () => {
+
+            await server.register([{
+                plugin: LokijsPlugin
+            }]);
+        };
+
+        register().catch((err) => {
+
+            expect(err).to.not.exist();
+        });
+
+        server.route({
+            method: 'GET',
+            path: '/',
+            config: {
+                auth: false,
+                handler: (request, h) => {
+
+                    const contacts = request.app.db.addCollection('contacts');
+                    contacts.insert({
+                        name: 'dave',
+                        firstLanguage: 'english'
+                    });
+                    const record = contacts.get(1);
+                    return record.firstLanguage;
+                }
+            }
+        });
+
+        const options = {
+            method: 'GET',
+            url: '/'
+        };
+        server.inject(options, (response) => {
+
+            expect(response.statusCode).to.equal(200);
+            expect(response.result).to.equal('english');
+        });
     });
-
-    const options = {
-        method: 'GET',
-        url: '/'
-    };
-    server.inject(options, (response) => {
-
-        expect(response.statusCode).to.equal(200);
-        expect(response.result).to.equal('english');
-        done();
-    });
-
 });

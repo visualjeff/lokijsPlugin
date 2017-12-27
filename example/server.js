@@ -1,32 +1,26 @@
+#!/usr/bin/env node
 'use strict';
 
 const Hapi = require('hapi');
 
-const server = new Hapi.Server();
-
-server.connection({
+const server = new Hapi.Server({
     host: 'localhost',
     port: 3000
 });
 
-server.register([{
-    register: require('../')
-}, {
-    register: require('./routes/applicationRoutes')
-}], (err) => {
+const startup = async () => {
 
-    if (err) {
-        throw err;
-    }
+    await server.register([{
+        plugin: require('../')
+    }, {
+        plugin: require('./routes/applicationRoutes')
+    }]);
+    await server.start();
+};
+
+startup().catch((err) => {
+
+    throw err;
 });
 
-server.start((err) => {
-
-    if (err) {
-        throw err;
-    }
-
-    console.dir('Server running at: ' + server.info.uri, {
-        colors: true
-    });
-});
+console.log(`${new Date()}: server running at ${server.info.uri}`);
