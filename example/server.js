@@ -1,7 +1,6 @@
-#!/usr/bin/env node
 'use strict';
 
-const Hapi = require('hapi');
+const Hapi = require('@hapi/hapi');
 
 const server = new Hapi.Server({
     host: 'localhost',

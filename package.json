@@ -1,7 +1,7 @@
 {
   "name": "lokijs-plugin",
   "description": "A lokijs database plugin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "repository": "git://github.com/visualjeff/lokijsPlugin.git",
   "bugs": {
     "url": "https://github.com/visualjeff/lokijsPlugin/issues"
@@ -17,20 +17,17 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "hapi": "^17.2.0",
-    "joi": "^10.2.2",
-    "lokijs": "^1.5.1"
-  },
-  "peerDependencies": {
-    "hapi": ">=12.x.x"
+    "@hapi/hapi": "^17.9.0",
+    "@hapi/joi": "^15.0.1",
+    "lokijs": "^1.5.6"
   },
   "devDependencies": {
-    "code": "^5.1.2",
-    "lab": "^15.1.2"
+    "@hapi/code": "^5.3.1",
+    "@hapi/lab": "^18.1.2"
   },
   "scripts": {
-    "test": "lab -r console -t 100 -a code -L",
-    "test-cov-html": "lab -r html -o coverage.html -a code -L"
+    "test": "lab -r console -t 100 -a @hapi/code -L",
+    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L"
   },
   "license": "BSD-3-Clause"
 }
