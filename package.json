@@ -1,7 +1,7 @@
 {
   "name": "lokijs-plugin",
   "description": "A lokijs database plugin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "repository": "git://github.com/visualjeff/lokijsPlugin.git",
   "bugs": {
     "url": "https://github.com/visualjeff/lokijsPlugin/issues"
@@ -17,7 +17,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@hapi/hapi": "^17.9.0",
+    "@hapi/hapi": "^18.4.1",
     "@hapi/joi": "^15.0.1",
     "lokijs": "^1.5.6"
   },
